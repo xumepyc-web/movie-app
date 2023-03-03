@@ -14,10 +14,11 @@ const MovieCard = ({ id, title, poster, synopsis, releaseDate }) => {
   };
   const noPosterUrl = 'https://image.tmdb.org/t/p/original//uc4RAVW1T3T29h6OQdr7zu4Blui.jpg';
   const posterUrl = `https://image.tmdb.org/t/p/original/${poster}`;
+  const url = poster === null ? noPosterUrl : posterUrl;
   return (
     <div className="movie-card-wrapper">
       <div className="movie-card" key={id}>
-        <img className="movie-poster" src={poster === null ? noPosterUrl : posterUrl} alt="poster" />
+        <img className="movie-poster" src={url} alt="poster" />
         <ul className="movie-info">
           <li className="movie-name">{title}</li>
           <li className="movie-release-date">{releaseDate}</li>
@@ -33,7 +34,7 @@ MovieCard.propTypes = {
   title: PropTypes.string.isRequired,
   poster: PropTypes.string,
   synopsis: PropTypes.string.isRequired,
-  releaseDate: PropTypes.any,
+  releaseDate: PropTypes.string.isRequired,
 };
 
 export default MovieCard;
