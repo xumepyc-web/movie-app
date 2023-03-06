@@ -1,27 +1,33 @@
 import React, { Component } from 'react';
 import { format } from 'date-fns';
-import { Online, Offline } from 'react-detect-offline';
 
 import Spinner from '../loader/spinner';
 import MovieService from '../../services/movie-service';
 import MovieCard from '../movie-card/movie-card';
 import ErrorIndicator from '../error-indicator/error-indicator';
 import './app.css';
+import SearchPanel from '../search-panel/search-panel';
 export default class App extends Component {
-  constructor() {
-    super();
-    this.updateMovie();
-  }
   state = {
     moviesData: [],
     loading: true,
     error: false,
+    searchValue: '',
   };
-  movieService = new MovieService();
+  componentDidMount() {
+    this.updateMovie();
+  }
 
+  // eslint-disable-next-line no-unused-vars
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (this.state.searchValue !== prevState.searchValue) {
+      this.updateMovie();
+    }
+  }
+  movieService = new MovieService();
   updateMovie() {
     this.movieService
-      .getMovie()
+      .getMovie(this.state.searchValue)
       .then((movies) => {
         this.setState({
           moviesData: movies,
@@ -43,37 +49,42 @@ export default class App extends Component {
       loading: false,
     });
   };
+  changeValue = (text) => {
+    this.setState({
+      searchValue: text,
+      loading: true,
+    });
+  };
   render() {
     const { moviesData, loading, error } = this.state;
     const errorMessage = error ? <ErrorIndicator /> : null;
-    if (loading) {
-      return <Spinner />;
-    }
+    const loader = loading ? <Spinner /> : null;
+    const notResult =
+      moviesData.length === 0 ? (
+        <div className="not-result-wrapper">
+          <p className="not-result">Movies not found</p>
+        </div>
+      ) : null;
     return (
       <section className="app-container">
-        <Online>
-          <form className="search-panel-form">
-            <input className="search-panel" placeholder="Type to search..." />
-          </form>
-          <div className="movie-card-list">
-            {moviesData.map((movie) => {
-              return (
-                <MovieCard
-                  key={movie.id}
-                  synopsis={movie.overview}
-                  releaseDate={this.setReleaseDate(movie.release_date)}
-                  id={movie.id}
-                  title={movie.title}
-                  poster={movie.poster_path}
-                />
-              );
-            })}
-          </div>
-          {errorMessage}
-        </Online>
-        <Offline>
-          <ErrorIndicator />
-        </Offline>
+        <SearchPanel changeValue={this.changeValue} />
+        {notResult}
+        {loader}
+        {errorMessage}
+        <div className="movie-card-list">
+          {moviesData.map((movie) => {
+            return (
+              <MovieCard
+                key={movie.id}
+                synopsis={movie.overview}
+                releaseDate={this.setReleaseDate(movie.release_date)}
+                id={movie.id}
+                title={movie.title}
+                poster={movie.poster_path}
+              />
+            );
+          })}
+        </div>
       </section>
     );
   }
