@@ -12,6 +12,10 @@
     margin-left: auto;
 }
 
+.movie-card-wrapper:nth-child(even) .movie-card {
+    margin-right: 0;
+}
+
 .movie-card {
     display: flex;
     width: 454px;
