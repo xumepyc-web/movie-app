@@ -1,6 +1,6 @@
 .search-panel-form {
     display: flex;
-    width: 100%;
+    min-width: 938px;
     justify-content: center;
 }
 

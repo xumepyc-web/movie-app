@@ -16,7 +16,7 @@ export default class App extends Component {
     error: false,
     searchValue: '',
     notFound: false,
-    pageNum: 0,
+    pageNum: 1,
   };
   componentDidMount() {
     this.updateMovie();
@@ -24,7 +24,7 @@ export default class App extends Component {
 
   // eslint-disable-next-line no-unused-vars
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (this.state.searchValue !== prevState.searchValue) {
+    if (this.state.searchValue !== prevState.searchValue || this.state.pageNum !== prevState.pageNum) {
       this.updateMovie();
       this.setState({
         notFound: true,
@@ -34,7 +34,7 @@ export default class App extends Component {
   movieService = new MovieService();
   updateMovie() {
     this.movieService
-      .getMovie(this.state.searchValue)
+      .getMovie(this.state.searchValue, this.state.pageNum)
       .then((movies) => {
         this.setState({
           moviesData: movies,
@@ -64,7 +64,6 @@ export default class App extends Component {
     });
   };
   onChangePage = (page) => {
-    console.log(this.state.pageNum);
     this.setState({
       pageNum: page,
     });
