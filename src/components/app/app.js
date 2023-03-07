@@ -13,6 +13,7 @@ export default class App extends Component {
     loading: true,
     error: false,
     searchValue: '',
+    notFound: false,
   };
   componentDidMount() {
     this.updateMovie();
@@ -22,6 +23,9 @@ export default class App extends Component {
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.state.searchValue !== prevState.searchValue) {
       this.updateMovie();
+      this.setState({
+        notFound: true,
+      });
     }
   }
   movieService = new MovieService();
@@ -56,11 +60,11 @@ export default class App extends Component {
     });
   };
   render() {
-    const { moviesData, loading, error } = this.state;
+    const { moviesData, loading, error, notFound } = this.state;
     const errorMessage = error ? <ErrorIndicator /> : null;
     const loader = loading ? <Spinner /> : null;
     const notResult =
-      moviesData.length === 0 ? (
+      moviesData.length === 0 && notFound && !loader ? (
         <div className="not-result-wrapper">
           <p className="not-result">Movies not found</p>
         </div>
