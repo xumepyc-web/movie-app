@@ -7,6 +7,8 @@ import MovieCard from '../movie-card/movie-card';
 import ErrorIndicator from '../error-indicator/error-indicator';
 import './app.css';
 import SearchPanel from '../search-panel/search-panel';
+import Message from '../message-indictor/message-indicator';
+import Page from '../pagination/pagination';
 export default class App extends Component {
   state = {
     moviesData: [],
@@ -14,6 +16,7 @@ export default class App extends Component {
     error: false,
     searchValue: '',
     notFound: false,
+    pageNum: 0,
   };
   componentDidMount() {
     this.updateMovie();
@@ -36,6 +39,7 @@ export default class App extends Component {
         this.setState({
           moviesData: movies,
           loading: false,
+          error: false,
         });
       })
       .catch(this.onError);
@@ -59,16 +63,17 @@ export default class App extends Component {
       loading: true,
     });
   };
+  onChangePage = (page) => {
+    console.log(this.state.pageNum);
+    this.setState({
+      pageNum: page,
+    });
+  };
   render() {
     const { moviesData, loading, error, notFound } = this.state;
     const errorMessage = error ? <ErrorIndicator /> : null;
     const loader = loading ? <Spinner /> : null;
-    const notResult =
-      moviesData.length === 0 && notFound && !loader ? (
-        <div className="not-result-wrapper">
-          <p className="not-result">Movies not found</p>
-        </div>
-      ) : null;
+    const notResult = moviesData.length === 0 && notFound && !loader ? <Message /> : null;
     return (
       <section className="app-container">
         <SearchPanel changeValue={this.changeValue} />
@@ -89,6 +94,7 @@ export default class App extends Component {
             );
           })}
         </div>
+        <Page onChangePage={this.onChangePage} />
       </section>
     );
   }
