@@ -15,20 +15,12 @@
     display: flex;
 }
 
-.movie-card-wrapper:nth-child(odd) .movie-card {
-    margin-left: auto;
-}
-
-.movie-card-wrapper:nth-child(even) .movie-card {
-    margin-right: 0;
-}
-
 .movie-card {
     display: flex;
     width: 454px;
     height: 281px;
     box-shadow: 0 0 10px 5px rgba(221, 221, 221, 1);
-    margin: 19px 35px 19px 0;
+    margin: 17px;
 }
 
 .movie-poster {

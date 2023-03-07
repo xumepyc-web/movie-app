@@ -9,7 +9,8 @@
     width: 100%
 }
 .app-container {
-    width: 1010px;
+    max-width: 1010px;
+    min-width: 450px;
     display: flex;
     flex-direction: column;
     align-items: center;
