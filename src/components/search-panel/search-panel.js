@@ -19,7 +19,7 @@ export default class SearchPanel extends Component {
       searchValue: '',
     });
   };
-  onSearchDebounce = debounce(this.onSearch, 3000);
+  onSearchDebounce = debounce(this.onSearch, 1000);
   render() {
     return (
       <form className="search-panel-form" onChange={this.onSearchDebounce}>
