@@ -7,7 +7,6 @@ export default class MovieService {
     return await res.json();
   }
 
-  //
   async getMovie(searchWord) {
     const res = await this.getResource(`
 https://api.themoviedb.org/3/search/movie?api_key=67d3b334dd26de18dce45fc60e84b4ba&language=en-US&query=${searchWord}&page=1&include_adult=false`);

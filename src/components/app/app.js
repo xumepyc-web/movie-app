@@ -28,7 +28,6 @@ export default class App extends Component {
       });
     }
   }
-  //
   movieService = new MovieService();
   updateMovie() {
     this.movieService

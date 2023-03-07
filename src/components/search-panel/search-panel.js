@@ -7,7 +7,6 @@ export default class SearchPanel extends Component {
   state = {
     searchValue: '',
   };
-  //
   onSearchValueChange = (event) => {
     this.setState({
       searchValue: event.target.value,
