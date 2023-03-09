@@ -22,7 +22,7 @@ export default class App extends Component {
     this.updateMovie();
   }
 
-  // eslint-disable-next-line no-unused-var
+  // eslint-disable-next-line no-unused-vars
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.state.searchValue !== prevState.searchValue || this.state.pageNum !== prevState.pageNum) {
       this.updateMovie();
