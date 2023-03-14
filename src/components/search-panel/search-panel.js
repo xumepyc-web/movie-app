@@ -22,7 +22,13 @@ export default class SearchPanel extends Component {
   onSearchDebounce = debounce(this.onSearch, 1000);
   render() {
     return (
-      <form className="search-panel-form" onChange={this.onSearchDebounce}>
+      <form
+        className="search-panel-form"
+        onChange={this.onSearchDebounce}
+        onSubmit={(event) => {
+          event.preventDefault();
+        }}
+      >
         <input
           className="search-panel"
           placeholder="Type to search..."
