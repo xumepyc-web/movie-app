@@ -36,7 +36,7 @@ const MovieCard = ({ id, title, poster, synopsis, releaseDate, rating }) => {
           <li className="movie-genre">Drama</li>
           <li className="movie-synopsis">{synopsisShortening(synopsis)}</li>
           <li className="movie-rate">
-            <RateComponent />
+            <RateComponent movieId={id} />
           </li>
         </ul>
       </div>
